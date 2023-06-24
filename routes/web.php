@@ -51,4 +51,5 @@ Route::controller(PrediksiController::class)->group(function () {
 
 Route::controller(AssignController::class)->group(function () {
     Route::get('/assign', 'index')->name('assign.index')->middleware('admin');
+    Route::post('/assign', 'store')->name('assign.store')->middleware('admin');
 });

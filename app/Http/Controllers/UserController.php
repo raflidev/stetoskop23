@@ -28,7 +28,7 @@ class UserController extends Controller
     {
 
         if (Auth::attempt($request->only('email', 'password'))) {
-            return redirect()->route('dashboard.pasien');
+            return redirect()->route('dashboard');
         }
 
         return back()->withErrors([

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assign;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AssignController extends Controller
 {
@@ -14,8 +16,11 @@ class AssignController extends Controller
      */
     public function index()
     {
-        $data = Assign::all();
-        return view('assign.assign_index', ['data' => $data]);
+        $data = DB::table('assign')->join('users', 'assign.user_id', '=', 'users.id')->join('users as dokter', 'assign.dokter_id', '=', 'dokter.id')->select('assign.id', 'users.nama_lengkap as pasien', 'dokter.nama_lengkap as dokter', 'assign.created_at')->get();
+        // dd($data);
+        $pasien = User::all()->where('role', 'pasien');
+        $dokter = User::all()->where('role', 'dokter');
+        return view('assign.assign_index', ['data' => $data, 'pasien' => $pasien, 'dokter' => $dokter]);
     }
 
     /**
@@ -36,7 +41,11 @@ class AssignController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Assign::create([
+            'user_id' => $request->user_id,
+            'dokter_id' => $request->dokter_id,
+        ]);
+        return redirect()->route('assign.index')->with('success', 'Data berhasil ditambahkan');
     }
 
     /**
