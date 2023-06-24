@@ -7,7 +7,7 @@
   {{-- <link rel="stylesheet" href="{{ URL::asset('build/assets/app.1dd54f02.css') }}"> --}}
   <title>Stetoskop Digital</title>
 </head>
-<body>
+<body class="font-sans">
     @yield('content')
 </body>
 </html>

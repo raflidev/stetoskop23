@@ -15,11 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/dashboard', function () {
-    return view('welcome');
+    return view('dashboard_pasien');
 })->name('welcome');
 
-Route::get('/', [UserController::class, 'login'])->name('login');
-Route::post('/', [UserController::class, 'login_action'])->name('login.action');
 
-Route::get('/register', [UserController::class, 'register'])->name('register');
-Route::post('/register', [UserController::class, 'store'])->name('register.action');
+Route::controller(UserController::class)->group(function () {
+    Route::get('/', 'login')->name('login');
+    Route::post('/', 'login_action')->name('login.action');
+    Route::get('/register', 'register')->name('register');
+    Route::post('/register', 'store')->name('register.action');
+    Route::get('/register-dokter', 'register_dokter')->name('register_dokter');
+    Route::post('/register-dokter', 'store_dokter')->name('register_dokter.action');
+    Route::post('/logout', 'logout')->name('logout');
+});

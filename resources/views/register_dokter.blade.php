@@ -16,8 +16,16 @@
                         {{ $errors->first('wrong') }}
                     </div>
                 @endif
-                <form method="POST" action="{{route('register.action')}}" class="space-y-3">
+                <form method="POST" enctype="multipart/form-data" action="{{route('register_dokter.action')}}" class="space-y-3">
                     @csrf
+                    <div>
+                        <label for="ktp">KTP</label>
+                        <input type="file" id="ktp" name="ktp" class="border py-1 px-2  border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full" >
+                    </div>
+                    <div>
+                        <label for="sip">SIP</label>
+                        <input type="file" id="sip" name="sip" class="border py-1 px-2  border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full" >
+                    </div>
                     <div>
                         <label for="nama_lengkap" class="block font-medium text-sm text-gray-700">Nama Lengkap</label>
                         <input type="text" value="{{old('nama_lengkap')}}" class="border py-1 px-2  border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full" id="nama_lengkap" name="nama_lengkap">

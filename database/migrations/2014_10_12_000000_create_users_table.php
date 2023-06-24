@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('gender');
             $table->string('role')->nullable();
+            $table->string('ktp')->nullable();
+            $table->string('sip')->nullable();
             $table->timestamps();
         });
     }
