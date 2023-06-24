@@ -6,7 +6,7 @@
             <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
                 <div>
                     <a href="/">
-                        <img src="http://127.0.0.1:8001/img/logo.png" alt="" style="width: 100px; height:100px;">
+                        <img src="/images/logo.png" alt="" style="width: 100px; height:100px;">
                     </a>
                 </div>
 

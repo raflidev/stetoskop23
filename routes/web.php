@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssignController;
 use App\Http\Controllers\PrediksiController;
 use App\Http\Controllers\UserController;
+use App\Models\Assign;
 use App\Models\Prediksi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,8 @@ Route::get('/dashboard', function () {
         return redirect()->route('assign.index');
     }
     if (Auth::user()->role == "dokter") {
-        return view('dashboard_dokter');
+        $data = Assign::join('users', 'users.id', '=', 'assign.user_id')->where('dokter_id', Auth::user()->id)->get();
+        return view('dashboard_dokter', ['data' => $data]);
     }
     if (Auth::user()->role == "pasien") {
         $data = Prediksi::get();
