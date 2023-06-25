@@ -28,7 +28,7 @@ Route::get('/dashboard', function () {
         return view('dashboard_dokter', ['data' => $data]);
     }
     if (Auth::user()->role == "pasien") {
-        $data = Prediksi::get();
+        $data = Prediksi::where('user_id', Auth::user()->id)->get();
         return view('dashboard_pasien', ['data' => $data]);
     }
 })->name('dashboard')->middleware('auth');
@@ -49,6 +49,8 @@ Route::controller(UserController::class)->group(function () {
 
 Route::controller(PrediksiController::class)->group(function () {
     Route::get('/result/{id}', 'result')->name('prediksi.result')->middleware('auth');
+    Route::get('/ownCheck', 'check_index')->name('prediksi.check_index')->middleware('auth');
+    Route::post('/ownCheck', 'run')->name('prediksi.run')->middleware('auth');
 });
 
 Route::controller(AssignController::class)->group(function () {
