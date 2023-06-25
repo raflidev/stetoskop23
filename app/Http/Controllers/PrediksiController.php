@@ -59,6 +59,36 @@ class PrediksiController extends Controller
         return redirect()->back()->with('success', 'Data berhasil ditambahkan');
     }
 
+    public function result($id)
+    {
+        $data = Prediksi::join('users', 'users.id', '=', 'prediksi.user_id')
+            ->join('assign', 'assign.user_id', '=', 'users.id')
+            ->join('users as dokter', 'dokter.id', '=', 'assign.dokter_id')
+            ->where('prediksi.id', $id)
+            ->select('prediksi.*', 'dokter.nama_lengkap as nama_dokter', 'users.nama_lengkap as nama_pasien')
+            ->first();
+
+        $as = 'false';
+        $mr = 'false';
+        $ms = 'false';
+        $mvp = 'false';
+        $n = 'false';
+
+        if ($data->result == 0) $as = 'true';
+        if ($data->result == 1) $mr = 'true';
+        if ($data->result == 2) $ms = 'true';
+        if ($data->result == 3) $mvp = 'true';
+        if ($data->result == 4) $n = 'true';
+
+        return view('result', ['data' => $data, 'as' => $as, 'mr' => $mr, 'ms' => $ms, 'mvp' => $mvp, 'n' => $n]);
+    }
+
+    public function detail($id)
+    {
+        $data = Prediksi::where('user_id', $id)->get();
+        return view('detail', ['data' => $data]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -135,7 +165,7 @@ class PrediksiController extends Controller
         $file->move($tujuan_upload, $nama_file);
 
         $http = new Client();
-        $response = $http->post('http://127.0.0.1:5000/predict', [
+        $response = $http->post('https://stetoskop.onrender.com/predict', [
             'multipart' => [
                 [
                     'name'     => 'file',

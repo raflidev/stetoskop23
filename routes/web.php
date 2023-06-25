@@ -51,6 +51,8 @@ Route::controller(PrediksiController::class)->group(function () {
     Route::get('/result/{id}', 'result')->name('prediksi.result')->middleware('auth');
     Route::get('/ownCheck', 'check_index')->name('prediksi.check_index')->middleware('auth');
     Route::post('/ownCheck', 'run')->name('prediksi.run')->middleware('auth');
+
+    Route::get('/detail/{id}', 'detail')->name('prediksi.detail')->middleware('auth');
 });
 
 Route::controller(AssignController::class)->group(function () {

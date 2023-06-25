@@ -6,7 +6,7 @@
                 <div class="flex">
                     <!-- Logo -->
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="http://127.0.0.1:8001/dashboard">
+                        <a href="{{route('dashboard')}}">
                             <img src="/images/logo.png" alt="" style="width: 50px; height:50px;">
                         </a>
                     </div>
