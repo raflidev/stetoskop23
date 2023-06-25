@@ -6,6 +6,8 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Throwable;
 
 class UserController extends Controller
 {
@@ -199,5 +201,148 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('login')->with('success', 'User berhasil dihapus!');
+    }
+
+
+    // API
+
+    public function login_api(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+        $credentials = $request->only('email', 'password');
+
+        $token = Auth::guard('api')->attempt($credentials);
+        if (!$token) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+
+        $user = Auth::guard('api')->user();
+        return response()->json([
+            'status' => 'success',
+            'user' => $user,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
+    }
+
+    public function register_api_pasien(Request $request)
+    {
+        $request->validate([
+            'nama_lengkap' => 'required',
+            'email' => 'required',
+            'alamat' => 'required',
+            'gender' => 'required',
+            'password' => 'required',
+        ]);
+
+        $user = new User();
+        $user->nama_lengkap = $request->nama_lengkap;
+        $user->email = $request->email;
+        $user->alamat = $request->alamat;
+        $user->gender = $request->gender;
+        $user->password = bcrypt($request->password);
+        $user->role = 'pasien';
+        $user->save();
+
+        $token = Auth::guard('api')->login($user);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User created successfully',
+            'user' => $user,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
+    }
+
+    public function register_api_dokter(Request $request)
+    {
+        $request->validate([
+            'ktp' => 'required',
+            'sip' => 'required',
+            'nama_lengkap' => 'required',
+            'email' => 'required',
+            'alamat' => 'required',
+            'gender' => 'required',
+            'password' => 'required',
+        ]);
+
+
+
+        // store image
+        $file = $request->file('ktp');
+        $filename = $file->getClientOriginalName();
+        $file->move(public_path('images'), $filename);
+
+        $file = $request->file('sip');
+        $filename2 = $file->getClientOriginalName();
+        $file->move(public_path('images'), $filename2);
+
+
+        $user = new User();
+        $user->nama_lengkap = $request->nama_lengkap;
+        $user->email = $request->email;
+        $user->alamat = $request->alamat;
+        $user->gender = $request->gender;
+        $user->password = bcrypt($request->password);
+        $user->role = 'dokter';
+        $user->ktp = $filename;
+        $user->sip = $filename2;
+        $user->save();
+
+        $token = Auth::guard('api')->login($user);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User created successfully',
+            'user' => $user,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
+    }
+
+    public function logout_api()
+    {
+        try {
+            Auth::guard('api')->logout();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Successfully logged out',
+            ]);
+        } catch (Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is invalid',
+            ], 401);
+        }
+    }
+
+    public function refresh_api()
+    {
+        try {
+            return response()->json([
+                'status' => 'success',
+                'user' => Auth::guard('api')->user(),
+                'authorisation' => [
+                    'token' => Auth::guard('api')->refresh(),
+                    'type' => 'bearer',
+                ]
+            ]);
+        } catch (Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is invalid',
+            ], 401);
+        }
     }
 }

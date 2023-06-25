@@ -124,4 +124,39 @@ class PrediksiController extends Controller
     {
         //
     }
+
+    // API
+
+    public function run_api(Request $request)
+    {
+        $file = $request->file('file');
+        $nama_file = time() . "_" . $file->getClientOriginalName();
+        $tujuan_upload = 'data_file';
+        $file->move($tujuan_upload, $nama_file);
+
+        $http = new Client();
+        $response = $http->post('http://127.0.0.1:5000/predict', [
+            'multipart' => [
+                [
+                    'name'     => 'file',
+                    'contents' => fopen($tujuan_upload . '/' . $nama_file, 'r'),
+                ],
+            ],
+        ]);
+
+        $response = json_decode($response->getBody());
+        $prediksi = new Prediksi();
+        $prediksi->user_id = $request->user_id;
+        $prediksi->suara = $nama_file;
+        $prediksi->file_path = $tujuan_upload . '/' . $nama_file;
+        $prediksi->jenis = "VHD";
+        $prediksi->result = $response->hasil;
+        $prediksi->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil ditambahkan',
+            'data' => $prediksi
+        ]);
+    }
 }
