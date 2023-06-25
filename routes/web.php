@@ -45,6 +45,12 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/register-dokter', 'store_dokter')->name('register_dokter.action');
 
     Route::post('/logout', 'logout')->name('logout');
+
+    Route::get('/user/show/{id}', 'show')->name('user.show')->middleware('auth');
+    Route::get('/user/profile', 'edit')->name('user.edit')->middleware('auth');
+
+    Route::put('/user/show/{id}', 'update')->name('user.update')->middleware('auth');
+    Route::put('/user/show/change/{id}', 'change_password')->name('user.change_password')->middleware('auth');
 });
 
 Route::controller(PrediksiController::class)->group(function () {

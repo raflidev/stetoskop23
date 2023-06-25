@@ -148,7 +148,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = User::where('id', $id)->first();
+        return view('user_show', ['data' => $data]);
     }
 
     /**
@@ -157,9 +158,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return view('profile', ['data' => Auth::user()->id]);
     }
 
     /**
@@ -176,7 +177,6 @@ class UserController extends Controller
             'email' => 'required',
             'alamat' => 'required',
             'gender' => 'required',
-            'password' => 'required',
         ]);
 
         $user = User::find($id);
@@ -187,6 +187,31 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->back()->with('success', 'User berhasil diupdate!');
+    }
+
+    public function change_password(Request $request, $id)
+    {
+        $request->validate([
+            'password' => 'required',
+        ]);
+
+        if (!Hash::check($request->password, Auth::user()->password)) {
+            return redirect()->back()->withInput()->withErrors([
+                'wrong' => 'Password salah!',
+            ]);
+        }
+
+        if ($request->new_password != $request->confirm_password) {
+            return redirect()->back()->withInput()->withErrors([
+                'wrong' => 'Password tidak sama!',
+            ]);
+        }
+
+        $user = User::find($id);
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return redirect()->back()->with('success', 'Password berhasil diupdate!');
     }
 
     /**
