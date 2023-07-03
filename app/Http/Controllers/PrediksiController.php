@@ -22,8 +22,9 @@ class PrediksiController extends Controller
 
     public function check_index()
     {
+        $data = Prediksi::where('user_id', Auth::user()->id)->get();
         $pasien = Assign::join('users', 'users.id', '=', 'assign.user_id')->where('dokter_id', Auth::user()->id)->get();
-        return view('klasifikasi', ['pasien' => $pasien]);
+        return view('klasifikasi', ['pasien' => $pasien, 'data' => $data]);
     }
 
     public function run(Request $request)
@@ -34,7 +35,7 @@ class PrediksiController extends Controller
         $file->move($tujuan_upload, $nama_file);
 
         $http = new Client();
-        $response = $http->post('http://127.0.0.1:5000/predict', [
+        $response = $http->post('https://stetoskop.onrender.com/predict', [
             'multipart' => [
                 [
                     'name'     => 'file',

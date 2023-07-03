@@ -10,6 +10,7 @@
 </head>
 <body class="font-poppins">
     @yield('content')
+    @yield('script')
 </body>
 @vite('resources/js/app.js')
 {{-- <script src="{{ URL::asset('build/assets/app.f40b63e3.js') }}"></script> --}}

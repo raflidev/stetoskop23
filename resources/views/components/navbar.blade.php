@@ -1,35 +1,33 @@
-<div class="bg-gray-100">
+<div class="fixed w-full">
     <!-- Primary Navigation Menu -->
-    <nav class="bg-white border-b border-gray-100">
+    <nav class="bg-black bg-opacity-70">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
-                <div class="flex">
-                    <!-- Logo -->
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="{{route('dashboard')}}">
-                            <img src="/images/logo.png" alt="" style="width: 50px; height:50px;">
-                        </a>
-                    </div>
                     <!-- Navigation Links -->
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <a class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition" href="{{route('dashboard')}}">Dashboard</a>
+                        <a class="inline-flex items-center {{request()->is('dashboard') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('dashboard')}}">Home</a>
                         @if(Auth::user()->role == 'admin')
-                            <a class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition" href="{{route('assign.index')}}">Add Dokter</a>
+                            <a class="inline-flex items-center {{request()->is('assign.index') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('assign.index')}}">Add Dokter</a>
                         @endif
                         @if(Auth::user()->role == 'pasien')
-                            <a class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition" href="{{route('prediksi.check_index')}}">Classification</a>
+                            <a class="inline-flex items-center {{request()->is('prediksi.check_index') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('prediksi.check_index')}}">Classification</a>
                         @endif
                         @if(Auth::user()->role == 'dokter')
-                            <a class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition" href="{{route('prediksi.check_index')}}">Classification</a>
+                            <a class="inline-flex items-center {{request()->is('prediksi.check_index') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('prediksi.check_index')}}">Classification</a>
                         @endif
                     </div>
-                </div>
+                     <!-- Logo -->
+                     <div class="flex-shrink-0 flex items-center">
+                        <a href="{{route('dashboard')}}">
+                            <img src="/images/logo.png" alt="" class="w-24">
+                        </a>
+                    </div>
 
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <div class="ml-3 relative">
                         <div onclick="toggleDropdown()">
                             <span class="inline-flex rounded-md">
-                                <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white  hover:text-orange-500 focus:outline-none transition">
                                     {{Auth::user()->nama_lengkap}}
                                     <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
