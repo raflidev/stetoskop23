@@ -2,11 +2,11 @@
 
 @section('content')
 <div>
-    <div class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+    <div class="font-popins text-gray-900 antialiased">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 bg-center bg-contain bg-no-repeat" style="background-image: url(/images/bg-login.png)">
             <div>
                 <a href="/">
-                    <img src="/images/logo.png" alt="" style="width: 100px; height:100px;">
+                    <img src="/images/logo.png" class="mx-auto w-4/6" alt="">
                 </a>
             </div>
 
@@ -22,33 +22,32 @@
                     {{ Session::get('success') }}
                 </div>
             @endif
+            <div class="text-orange-500 font-bold text-2xl pb-4">Login</div>
             <form method="POST" action="{{route('login.action')}}">
                 @csrf
                 <div>
                     <label class="block font-medium text-sm text-gray-700" for="email">
                         Email
                     </label>
-                    <input  class="border py-1 px-2  border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full" id="email" type="text" name="email" required="required" autofocus="autofocus">
+                    <input  class="border py-1 px-2  border-orange-500 rounded-md shadow-sm block mt-1 w-full" id="email" type="text" name="email" required="required" autofocus="autofocus">
                 </div>
 
                 <div class="mt-4">
                     <label class="block font-medium text-sm text-gray-700" for="password">
                         Password
                     </label>
-                    <input  class="border py-1 px-2  border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-full" id="password" type="password" name="password" required="required" autocomplete="current-password">
+                    <input  class="border py-1 px-2  border-orange-500 rounded-md shadow-sm block mt-1 w-full" id="password" type="password" name="password" required="required" autocomplete="current-password">
                 </div>
 
-                <div class="flex items-center justify-end mt-4">
+                <div class="flex items-center justify-center mt-4">
 
-                    <button class="ml-4 px-2 sm:rounded-lg bg-yellow-400 text-black-800 font-bold p-2 uppercase border-t border-b border-r" type="submit">
-                        Log in
+                    <button class="px-16 rounded-full bg-orange-500 text-white font-bold py-3 uppercase" type="submit">
+                        Login
                     </button>
                 </div>
 
-                <div class="block mt-4 text-left">
-                    <div>Belum punya akun? <a href="{{route('register')}}" class="text-ms underline">Register</a> </div>
-                    <div>atau jika kamu Dokter <a href="register-dokter" class="text-ms underline">Register Dokter</a></div>
-                    <!--  -->
+                <div class="block mt-4 text-center text-sm">
+                    <div>Doesn't have an account? <a href="{{route('register')}}" class="text-ms text-orange-500">Sign up here</a></div>
                 </div>
             </form>
         </div>
