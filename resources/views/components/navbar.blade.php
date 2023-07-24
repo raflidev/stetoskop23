@@ -7,14 +7,14 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <a class="inline-flex items-center {{request()->is('dashboard') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('dashboard')}}">Home</a>
                         @if(Auth::user()->role == 'admin')
-                            <a class="inline-flex items-center {{request()->is('assign.index') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('assign.index')}}">Add Dokter</a>
+                            <a class="inline-flex items-center {{request()->is('assign') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('assign.index')}}">Add Dokter</a>
                         @endif
                         @if(Auth::user()->role == 'pasien')
-                            <a class="inline-flex items-center {{request()->is('prediksi.check_index') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('prediksi.check_index')}}">Classification</a>
+                            <a class="inline-flex items-center {{request()->is('ownCheck') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('prediksi.check_index')}}">Classification</a>
                         @endif
-                        @if(Auth::user()->role == 'dokter')
+                        {{-- @if(Auth::user()->role == 'dokter')
                             <a class="inline-flex items-center {{request()->is('prediksi.check_index') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('prediksi.check_index')}}">Classification</a>
-                        @endif
+                        @endif --}}
                     </div>
                      <!-- Logo -->
                      <div class="flex-shrink-0 flex items-center">

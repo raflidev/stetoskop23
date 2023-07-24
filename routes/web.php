@@ -7,6 +7,7 @@ use App\Models\Assign;
 use App\Models\Prediksi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Console\Input\Input;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,11 @@ Route::get('/dashboard', function () {
         return redirect()->route('assign.index');
     }
     if (Auth::user()->role == "dokter") {
-        $data = Assign::join('users', 'users.id', '=', 'assign.user_id')->where('dokter_id', Auth::user()->id)->get();
+        if (isset($_GET['name'])) {
+            $data = Assign::join('users', 'users.id', '=', 'assign.user_id')->where('dokter_id', Auth::user()->id)->where('nama_lengkap', 'like', '%' . $_GET['name'] . '%')->get();
+        } else {
+            $data = Assign::join('users', 'users.id', '=', 'assign.user_id')->where('dokter_id', Auth::user()->id)->get();
+        }
         return view('dashboard_dokter', ['data' => $data]);
     }
     if (Auth::user()->role == "pasien") {
@@ -56,7 +61,7 @@ Route::controller(UserController::class)->group(function () {
 Route::controller(PrediksiController::class)->group(function () {
     Route::get('/result/{id}', 'result')->name('prediksi.result')->middleware('auth');
     Route::get('/ownCheck', 'check_index')->name('prediksi.check_index')->middleware('auth');
-    Route::post('/ownCheck', 'run')->name('prediksi.run')->middleware('auth');
+    Route::post('/ownCheck/{user_id}', 'run')->name('prediksi.run')->middleware('auth');
 
     Route::get('/detail/{id}', 'detail')->name('prediksi.detail')->middleware('auth');
 });

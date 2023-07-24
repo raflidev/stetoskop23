@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Prediksi;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -149,7 +150,8 @@ class UserController extends Controller
     public function show($id)
     {
         $data = User::where('id', $id)->first();
-        return view('user_show', ['data' => $data]);
+        $history = Prediksi::where('user_id', $id)->get();
+        return view('user_show', ['data' => $data, 'history' => $history, 'user_id' => $id]);
     }
 
     /**

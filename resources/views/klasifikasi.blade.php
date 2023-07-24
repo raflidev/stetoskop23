@@ -1,5 +1,10 @@
 @extends('layout.app')
 
+@section('head')
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+@endsection
+
 @section('content')
     <x-navbar/>
     <div class="min-h-screen bg-gray-100 bg-no-repeat bg-cover" style="background-image: url(/images/bg-klasifikasi.png)">
@@ -15,6 +20,12 @@
         </div>
     </div>
     <div class="min-h-screen bg-gray-100 pt-10">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-10">
+            <form action="{{route('prediksi.run', ['user_id' => Auth::user()->id])}}" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
+                @csrf
+            </form>
+        </div>
+
         <div class="max-w-7xl mx-auto">
             <div class="px-6 py-3">
                 <table class="min-w-full divide-y divide-gray-200 w-full rounded-xl">
@@ -73,7 +84,7 @@
                             </button>
                         </div>
                         <h3 class="text-center">Classification</h3>
-                        <form action="{{route('prediksi.run')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('prediksi.run', ['user_id', Auth::user()->id])}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="space-y-4">
                                 @if(Auth::user()->role == 'dokter')

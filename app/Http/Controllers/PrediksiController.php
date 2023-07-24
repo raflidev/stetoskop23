@@ -27,7 +27,7 @@ class PrediksiController extends Controller
         return view('klasifikasi', ['pasien' => $pasien, 'data' => $data]);
     }
 
-    public function run(Request $request)
+    public function run(Request $request, $user_id = null)
     {
         $file = $request->file('file');
         $nama_file = time() . "_" . $file->getClientOriginalName();
@@ -47,7 +47,7 @@ class PrediksiController extends Controller
         $response = json_decode($response->getBody());
         $prediksi = new Prediksi();
         if (Auth::user()->role == 'dokter') {
-            $prediksi->user_id = $request->user_id;
+            $prediksi->user_id = $user_id;
         } else {
             $prediksi->user_id = Auth::user()->id;
         }

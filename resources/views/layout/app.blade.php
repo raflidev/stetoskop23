@@ -6,6 +6,7 @@
   @vite('resources/css/app.css')
   <script src="https://unpkg.com/wavesurfer.js@2.2.1/dist/wavesurfer.min.js"></script>
   {{-- <link rel="stylesheet" href="{{ URL::asset('build/assets/app.89ec1456.css') }}"> --}}
+  @yield('head')
   <title>Stetoskop Digital</title>
 </head>
 <body class="font-poppins">

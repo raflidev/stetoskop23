@@ -3,26 +3,40 @@
 @section('content')
 
 <x-navbar/>
-<div class="min-h-screen bg-gray-100 pt-10">
+<div class="min-h-screen bg-gray-100">
+    <div class="h-[20rem] bg-cover bg-no-repeat" style="background-image: url(/images/bg-pasien.png)">
+        <div class="flex h-full justify-center">
+            <div class="w-5/6 my-auto space-y-3">
+                <span class="text-white">Hello, <strong>{{ Auth::user()->nama_lengkap }}</strong></span>
+                <div class="text-white font-bold text-5xl w-6/12 leading-snug">Find Patient</div>
+            </div>
+        </div>
+    </div>
     <div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="px-6 py-3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <table class="min-w-full divide-y divide-gray-200 w-full">
+            <div class="flex justify-center py-3">
+                <form action="/dashboard" class="flex space-x-3 items-center w-1/2">
+                    <input name="name" type="text" class="py-2 px-5 rounded w-full" placeholder="Search Patient"/>
+                    <button type="submit" class="bg-orange-500 py-2 px-3 rounded">Search</button>
+                </form>
+            </div>
+            <div class="px-6 py-3 overflow-hidden sm:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200 w-full rounded-xl">
                     <thead>
                         <tr>
-                            <th scope="col" width="300" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col" width="300" class="px-6 py-3 bg-orange-500 text-left text-xs font-medium text-white rounded-l-md uppercase tracking-wider">
                                 Name
                             </th>
-                            <th scope="col" width="300" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col" width="300" class="px-6 py-3 bg-orange-500 text-left text-xs font-medium text-white uppercase tracking-wider">
                                 Gender
                             </th>
-                            <th scope="col" width="300" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col" width="300" class="px-6 py-3 bg-orange-500 text-left text-xs font-medium text-white uppercase tracking-wider">
                                 Address
                             </th>
-                            <th scope="col" width="300" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col" width="300" class="px-6 py-3 bg-orange-500 text-left text-xs font-medium text-white uppercase tracking-wider">
                                 Time
                             </th>
-                            <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col" class="px-6 py-3 bg-orange-500 text-left text-xs font-medium text-white rounded-r-md uppercase tracking-wider">
                                 Action
                             </th>
                         </tr>
@@ -55,7 +69,7 @@
                                         <ul class="invisible group-hover:visible absolute text-gray-700 pt-1">
                                             {{-- <li class=""><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="{{route('dokter.dokter.classification', $pasien->user_id)}}">Classification Offline</a></li> --}}
                                             <li class=""><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="{{route('user.show', $data->user_id)}}" >User Profile</a></li>
-                                            <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="{{route('prediksi.detail', $data->user_id)}}" >Details</a></li>
+                                            {{-- <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="{{route('prediksi.detail', $data->user_id)}}" >Details</a></li> --}}
                                         </ul>
                                     </div>
                                 </div>

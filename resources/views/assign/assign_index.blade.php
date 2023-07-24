@@ -3,10 +3,18 @@
 @section('content')
 <x-navbar/>
 <div class="min-h-screen bg-gray-100">
-    <div class="py-3 ">
+    <div class="h-[30rem]" style="background-image: url(/images/bg-pasien.png)">
+        <div class="flex h-full justify-center">
+            <div class="w-5/6 my-auto space-y-3">
+                <span class="px-2 text-white">Hello, <strong>{{ Auth::user()->nama_lengkap }}</strong></span>
+                <div class="text-white font-bold text-5xl w-4/12 leading-snug">Assign Dokter</div>
+            </div>
+        </div>
+    </div>
+    <div class="py-3">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="px-6 py-3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <h3 class="text-center">Welcome, <strong>{{ Auth::user()->nama_lengkap }}</h3>
+                <h3 class="text-center">Welcome, <strong>{{ Auth::user()->nama_lengkap }} </strong></h3>
             </div>
         </div>
     </div>
@@ -30,23 +38,23 @@
                     <div class="space-x-4 flex items-center mb-10">
                         <div>
                             <label class="block font-medium text-sm text-gray-700" for="id">
-                                Doctor
-                            </label>
-                            <select name="dokter_id" id="id" class="p-4 border-t mr-0 border-b border-l text-black-800 border-blue-200 bg-white sm:rounded-lg">
-                                <option value=""> -- Select Doctor --</option>
-                                @foreach ($dokter as $d)
-                                <option value="{{$d->id}}">{{$d->nama_lengkap}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-medium text-sm text-gray-700" for="id">
                                 pasien
                             </label>
                             <select name="user_id" id="id" class="p-4 border-t mr-0 border-b border-l text-black-800 border-blue-200 bg-white sm:rounded-lg">
                                 <option value=""> -- Select Pasien --</option>
                                 @foreach ($pasien as $p)
                                 <option value="{{$p->id}}">{{$p->nama_lengkap}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-medium text-sm text-gray-700" for="id">
+                                Doctor
+                            </label>
+                            <select name="dokter_id" id="id" class="p-4 border-t mr-0 border-b border-l text-black-800 border-blue-200 bg-white sm:rounded-lg">
+                                <option value=""> -- Select Doctor --</option>
+                                @foreach ($dokter as $d)
+                                <option value="{{$d->id}}">{{$d->nama_lengkap}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -101,5 +109,6 @@
             </div>
         </div>
     </div>
+    <x-footer/>
 </div>
 @endsection
