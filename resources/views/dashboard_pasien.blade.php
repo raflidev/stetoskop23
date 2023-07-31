@@ -3,7 +3,7 @@
 @section('content')
 
 <x-navbar/>
-<div class="min-h-screen bg-gray-100" style="background-image: url(/images/bg-pasien.png)">
+<div class="min-h-screen bg-gray-100 bg-no-repeat bg-cover" style="background-image: url(/images/bg-pasien.png)">
     <div class="flex h-screen justify-center">
         <div class="w-5/6 my-auto space-y-3">
             <span class="bg-black bg-opacity-60 border-l-2 border-orange-400 px-2 text-white">Our New Technology</span>
