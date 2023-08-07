@@ -190,4 +190,34 @@ class PrediksiController extends Controller
             'data' => $prediksi
         ]);
     }
+
+
+
+    // API
+    public function getAll()
+    {
+        $prediksi = Prediksi::all();
+        return response()->json([
+            'status' => 'success',
+            'data' => $prediksi
+        ]);
+    }
+
+    public function getByID($id)
+    {
+        $prediksi = Prediksi::where('id', $id)->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $prediksi
+        ]);
+    }
+
+    public function getByUserID($id)
+    {
+        $prediksi = Prediksi::where('user_id', $id)->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $prediksi
+        ]);
+    }
 }

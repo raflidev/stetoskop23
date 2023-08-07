@@ -19,7 +19,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $user = User::all();
+        return response()->json(
+            [
+                'status' => 'success',
+                'data' => $user,
+            ]
+        );
     }
 
     public function login()
@@ -371,5 +377,38 @@ class UserController extends Controller
                 'message' => 'Token is invalid',
             ], 401);
         }
+    }
+
+    public function getUserId($id)
+    {
+        $user = User::where('id', $id)->first();
+        return response()->json(
+            [
+                'status' => 'success',
+                'data' => $user,
+            ]
+        );
+    }
+
+    public function getAllPasien()
+    {
+        $user = User::where('role', 'pasien')->get();
+        return response()->json(
+            [
+                'status' => 'success',
+                'data' => $user,
+            ]
+        );
+    }
+
+    public function getAllDokter()
+    {
+        $user = User::where('role', 'dokter')->get();
+        return response()->json(
+            [
+                'status' => 'success',
+                'data' => $user,
+            ]
+        );
     }
 }

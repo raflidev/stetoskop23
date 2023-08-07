@@ -26,4 +26,15 @@ Route::post('/register_pasien', [UserController::class, 'register_api_pasien']);
 Route::post('/logout', [UserController::class, 'logout_api']);
 Route::post('/refresh', [UserController::class, 'refresh_api']);
 
+Route::get('/users', [UserController::class, 'index']);
+Route::get('/user/{id}', [UserController::class, 'getUserId']);
+
+// prediksi
+Route::get('/prediksi', [PrediksiController::class, 'getAll']);
+Route::get('/prediksi/{id}', [PrediksiController::class, 'getByID']);
+Route::get('/prediksi/user/{id}', [PrediksiController::class, 'getByUserID']);
 Route::post('/ownCheck', [PrediksiController::class, 'run_api']);
+
+// pasien
+Route::get('/pasien', [UserController::class, 'getAllPasien']);
+Route::get('/dokter', [UserController::class, 'getAllDokter']);
