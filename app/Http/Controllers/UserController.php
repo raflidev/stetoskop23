@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Throwable;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -268,13 +269,26 @@ class UserController extends Controller
 
     public function register_api_pasien(Request $request)
     {
-        $request->validate([
+
+        $rules = [
             'nama_lengkap' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users',
             'alamat' => 'required',
             'gender' => 'required',
             'password' => 'required',
-        ]);
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $response = [
+                'status' => 'error',
+                'error' => $validator->messages(),
+            ];
+
+            return response()->json(['validator_failed' => $response], 401);
+        }
+
 
         $user = new User();
         $user->nama_lengkap = $request->nama_lengkap;
@@ -284,6 +298,8 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         $user->role = 'pasien';
         $user->save();
+
+
 
         $token = Auth::guard('api')->login($user);
         return response()->json([
@@ -299,15 +315,26 @@ class UserController extends Controller
 
     public function register_api_dokter(Request $request)
     {
-        $request->validate([
+        $rules = [
             'ktp' => 'required',
             'sip' => 'required',
             'nama_lengkap' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users',
             'alamat' => 'required',
             'gender' => 'required',
             'password' => 'required',
-        ]);
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $response = [
+                'status' => 'error',
+                'error' => $validator->messages(),
+            ];
+
+            return response()->json(['validator_failed' => $response], 401);
+        }
 
 
 
