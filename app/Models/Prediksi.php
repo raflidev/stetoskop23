@@ -17,5 +17,7 @@ class Prediksi extends Model
         'file_path',
         'jenis',
         'result',
+        'status',
+        'note',
     ];
 }

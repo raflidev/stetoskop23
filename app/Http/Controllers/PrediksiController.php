@@ -55,6 +55,8 @@ class PrediksiController extends Controller
         $prediksi->file_path = $tujuan_upload . '/' . $nama_file;
         $prediksi->jenis = "VHD";
         $prediksi->result = $response->hasil;
+        $prediksi->status = 0;
+        $prediksi->note = "";
         $prediksi->save();
 
         return redirect()->back()->with('success', 'Data berhasil ditambahkan');
@@ -80,7 +82,7 @@ class PrediksiController extends Controller
         if ($data->result == 2) $ms = 'true';
         if ($data->result == 3) $mvp = 'true';
         if ($data->result == 4) $n = 'true';
-
+        // dd($data->status);
         return view('result', ['data' => $data, 'as' => $as, 'mr' => $mr, 'ms' => $ms, 'mvp' => $mvp, 'n' => $n]);
     }
 

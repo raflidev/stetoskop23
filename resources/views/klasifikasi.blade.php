@@ -38,6 +38,12 @@
                                 Type
                             </th>
                             <th scope="col" width="300" class="px-6 py-3 bg-orange-500 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                Status
+                            </th>
+                            <th scope="col" width="300" class="px-6 py-3 bg-orange-500 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                Note from Doctor
+                            </th>
+                            <th scope="col" width="300" class="px-6 py-3 bg-orange-500 text-left text-xs font-medium text-white uppercase tracking-wider">
                                 Time
                             </th>
                             <th scope="col" class="px-6 py-3 bg-orange-500 text-left text-xs font-medium text-white rounded-r-md uppercase tracking-wider">
@@ -54,6 +60,20 @@
                             </td>
                             <td scope="col" width="300" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{$data->jenis}}
+                            </td>
+                            <td scope="col" width="300" class="px-6 py-3  bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                @if($data->status == 0)
+                                    <button class="bg-red-500 text-white font-bold py-1 px-2 rounded inline-flex items-center">
+                                        Not Verified    
+                                    </button>
+                                @else
+                                    <button class="bg-green-500 text-white font-bold py-1 px-2 rounded inline-flex items-center">
+                                        Verified    
+                                    </button>
+                                @endif
+                            </td>
+                            <td scope="col" width="300" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{$data->note}}
                             </td>
                             <td scope="col" width="300" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{$data->created_at}}

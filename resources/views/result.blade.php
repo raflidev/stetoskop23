@@ -18,6 +18,35 @@
         </div>
     </div>
 
+    @if($data->status == 0)
+    <div class="">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-3">
+        <div class="px-6 py-3 bg-white overflow-hidden shadow-xl sm:rounded-lg space-y-3">
+          <div>
+            <div>Verification</div>
+            <div>
+              <select name="" id="" class="px-3 py-1 border border-black rounded-md">
+                <option value="1">Aortic Stenosis (AS)</option>
+                <option value="2">Mitral Regurgitation (MR)</option>
+                <option value="3">Mitral Stenosis (MS)</option>
+                <option value="4">Mitral Valve Prolapse (MVP)</option>
+                <option value="5">Normal (N)</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <div>Note for user</div>
+            <div>
+              <input type="text" class="px-3 py-1 border border-black rounded-md w-4/6" />
+          </div>
+          <div class="py-2">
+            <button class="px-3 py-1 bg-green-500 rounded-md text-medium">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    @endif
+
     <div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="px-6 py-3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -35,23 +64,24 @@
     </div>
 
     <div class="py-3">
+        
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="px-6 py-3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                {{-- <div class="ostat">
                     <h3 class="">Overall Status</h3>
                     @csrf
-                    <p>AS : {{$as}}</p>
-                    <p>MR : {{$mr}}</p>
-                    <p>MS : {{$ms}}</p>
-                    <p>MVP : {{$mvp}}</p>
-                    <p>N : {{$n}}</p>
+                    <p>Aortic Stenosis : {{$as}}</p>
+                    <p>Mitral Regurgitation : {{$mr}}</p>
+                    <p>Mitral Stenosis : {{$ms}}</p>
+                    <p>Mitral Valve Prolapse : {{$mvp}}</p>
+                    <p>Normal : {{$n}}</p>
                 </div> --}}
                 <div class="currstat">
                     <div class="flex justify-center">
-                        <div class="w-5/6 grid grid-cols-5 gap-4 text-center">
+                        <div class="w-6/6 grid grid-cols-5 gap-4 text-center">
                             <div class="flex flex-col space-y-3">
                                 <div class="py-2 px-4 rounded font-semibold text-lg text-white bg-orange-500">
-                                    AS
+                                  Aortic Stenosis
                                 </div>
                                 <div class="flex justify-center">
                                     @if($as == 'true')
@@ -68,7 +98,7 @@
                             </div>
                             <div class="flex flex-col space-y-3">
                                 <div class="py-2 px-4 rounded font-semibold text-lg text-white bg-orange-500">
-                                    MR
+                                Mitral Regurgitation
                                 </div>
                                 <div class="flex justify-center">
                                     @if($mr == 'true')
@@ -85,7 +115,7 @@
                             </div>
                             <div class="flex flex-col space-y-3">
                                 <div class="py-2 px-4 rounded font-semibold text-lg text-white bg-orange-500">
-                                    MS
+                                  Mitral Stenosis
                                 </div>
                                 <div class="flex justify-center">
                                     @if($ms == 'true')
@@ -102,7 +132,7 @@
                             </div>
                             <div class="flex flex-col space-y-3">
                                 <div class="py-2 px-4 rounded font-semibold text-lg text-white bg-orange-500">
-                                    MVP
+                                  Mitral Valve Prolapse
                                 </div>
                                 <div class="flex justify-center">
                                     @if($mvp == 'true')
@@ -113,13 +143,12 @@
                                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10 text-red-500">
                                         <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd" />
                                       </svg>
-
                                     @endif
                                 </div>
                             </div>
                             <div class="flex flex-col space-y-3">
                                 <div class="py-2 px-4 rounded font-semibold text-lg text-white bg-orange-500">
-                                    N
+                                    Normal
                                 </div>
                                 <div class="flex justify-center">
                                     @if($n == 'true')
@@ -130,7 +159,6 @@
                                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10 text-red-500">
                                         <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd" />
                                       </svg>
-
                                     @endif
                                 </div>
                             </div>

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string("file_path");
             $table->string("jenis");
             $table->string("result");
+            $table->integer("status");
+            $table->string("note");
             $table->timestamps();
         });
     }
