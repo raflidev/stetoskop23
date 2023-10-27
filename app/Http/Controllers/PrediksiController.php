@@ -83,7 +83,17 @@ class PrediksiController extends Controller
         if ($data->result == 3) $mvp = 'true';
         if ($data->result == 4) $n = 'true';
         // dd($data->status);
-        return view('result', ['data' => $data, 'as' => $as, 'mr' => $mr, 'ms' => $ms, 'mvp' => $mvp, 'n' => $n]);
+        return view('result', ['data' => $data, 'as' => $as, 'mr' => $mr, 'ms' => $ms, 'mvp' => $mvp, 'n' => $n, 'id' => $id]);
+    }
+
+    public function verification(Request $request, $id)
+    {
+        $prediksi = Prediksi::find($id);
+        $prediksi->status = $request->status;
+        $prediksi->note = $request->note;
+        $prediksi->save();
+
+        return redirect()->back()->with('success', 'Data berhasil diverifikasi');
     }
 
     public function detail($id)

@@ -20,12 +20,13 @@
 
     @if($data->status == 0)
     <div class="">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-3">
+      <form class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-3" method="post" action="{{route('prediksi.verification', ['id' => $id])}}">
+        @csrf
         <div class="px-6 py-3 bg-white overflow-hidden shadow-xl sm:rounded-lg space-y-3">
           <div>
             <div>Verification</div>
             <div>
-              <select name="" id="" class="px-3 py-1 border border-black rounded-md">
+              <select name="status" id="" class="px-3 py-1 border border-black rounded-md">
                 <option value="1">Aortic Stenosis (AS)</option>
                 <option value="2">Mitral Regurgitation (MR)</option>
                 <option value="3">Mitral Stenosis (MS)</option>
@@ -37,14 +38,14 @@
           <div>
             <div>Note for user</div>
             <div>
-              <input type="text" class="px-3 py-1 border border-black rounded-md w-4/6" />
+              <input type="text" name='note' class="px-3 py-1 border border-black rounded-md w-4/6" />
           </div>
           <div class="py-2">
-            <button class="px-3 py-1 bg-green-500 rounded-md text-medium">Submit</button>
+            <button type="submit" class="px-3 py-1 bg-orange-500 font-medium rounded-md text-white">Submit</button>
           </div>
         </div>
       </div>
-    </div>
+    </form>
     @endif
 
     <div>

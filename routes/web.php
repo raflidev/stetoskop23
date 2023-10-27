@@ -63,6 +63,8 @@ Route::controller(PrediksiController::class)->group(function () {
     Route::get('/ownCheck', 'check_index')->name('prediksi.check_index')->middleware('auth');
     Route::post('/ownCheck/{user_id}', 'run')->name('prediksi.run')->middleware('auth');
 
+    Route::post('/verify/{id}', 'verification')->name('prediksi.verification')->middleware('auth');
+
     Route::get('/detail/{id}', 'detail')->name('prediksi.detail')->middleware('auth');
 });
 
