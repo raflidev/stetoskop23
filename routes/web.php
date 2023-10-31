@@ -40,8 +40,8 @@ Route::get('/dashboard', function () {
 
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('/', 'login')->name('login');
-    Route::post('/', 'login_action')->name('login.action');
+    Route::get('/login', 'login')->name('login');
+    Route::post('/login', 'login_action')->name('login.action');
 
     Route::get('/register', 'register')->name('register');
     Route::post('/register', 'store')->name('register.action');
