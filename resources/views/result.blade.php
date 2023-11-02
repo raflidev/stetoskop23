@@ -2,8 +2,8 @@
 
 
 @section('content')
-<x-navbar/>
-<div class="min-h-screen bg-gray-100 pt-10">
+{{-- <x-navbar/> --}}
+{{-- <div class="min-h-screen bg-gray-100 pt-10">
     <div class="py-3">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="px-6 py-3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -68,15 +68,6 @@
         
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="px-6 py-3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
-               {{-- <div class="ostat">
-                    <h3 class="">Overall Status</h3>
-                    @csrf
-                    <p>Aortic Stenosis : {{$as}}</p>
-                    <p>Mitral Regurgitation : {{$mr}}</p>
-                    <p>Mitral Stenosis : {{$ms}}</p>
-                    <p>Mitral Valve Prolapse : {{$mvp}}</p>
-                    <p>Normal : {{$n}}</p>
-                </div> --}}
                 <div class="currstat">
                     <div class="flex justify-center">
                         <div class="w-6/6 grid grid-cols-5 gap-4 text-center">
@@ -169,6 +160,101 @@
             </div>
         </div>
     </div>
+</div> --}}
+
+<div class="flex">
+  <x-sidebar/>
+  <div class="w-2/12"></div>
+  <div class="w-10/12 bg-gray-100 min-h-screen">
+      <x-navbar/>
+      <div class="flex justify-center">
+      <div class="w-5/6 bg-white mt-10 shadow rounded-sm py-5 px-8">
+          <div class="flex justify-between text-gray-700 items-center">
+              <div>
+              <div class="text-lg">Welcome, <span class="font-medium">Rafli Ramadhan</span></div>
+              <div class="text-sm">You are logged in as patient</div>
+              </div>
+              <div class="shadow-md p-2 rounded-full outline outline-2 group hover:outline-orange-600 duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 group-hover:text-orange-600 duration-200">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>              
+              </div>
+          </div>
+          </div>
+      </div>
+
+      <div class="flex justify-center">
+          <div class="w-5/6 bg-white mt-5 shadow rounded-sm py-5 px-8 text-gray-700">
+            <div class="flex space-x-4 items-center mb-6">
+                <a href="{{route('prediksi.check_index')}}" class="outline outline-1 p-1 outline-gray-700 rounded-full inline-block duration-300 group hover:outline-orange-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 group-hover:text-orange-600 duration-300">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+                  </svg>            
+                </a>
+                <h1 class="text-lg">Diagnose</h1>
+            </div>
+
+            <div>
+              <div class="py-3">
+                <p class="hidden">path : <span id="path">{{$data->file_path}}</span></p>
+                <h3 class="text-center">PCG Monitoring</h3>
+                <div id='myDiv'>
+                    <!-- Plotly chart will be drawn inside this DIV -->
+                </div>
+                <div class="links text-sm">
+                    <button type="button" name="playbtn" onclick="wavesurfer.play()">Play</button>
+                    <button type="button" name="playbtn" onclick="wavesurfer.pause()">Pause</button>
+                    <span id="currentDuration">00:00</span> / <span id="duration"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-10 space-y-4">
+              <div>
+                <h2 class="text-sm text-gray-600 mb-1">Doctor name</h2>
+                <span>{{$data->nama_dokter}}</span>
+              </div>
+              <div>
+                <h2 class="text-sm text-gray-600 mb-1">Note</h2>
+                <span>{{$data->note}}</span>
+              </div>
+              <div class="flex space-x-20 text-sm">
+                <div>
+                  <h2 class="text-sm text-gray-600 mb-2">Diagnose</h2>
+                  {{-- <span>{{$data->result}}</span> --}}
+                  @if($n == true)
+                    <span class="px-3 py-1 bg-green-500 text-white rounded-md">Normal</span>
+                  @elseif($as == true)
+                    <span class="px-3 py-1 bg-red-500 text-white rounded-md">Aortic Stenosis</span>
+                  @elseif($mr == true)
+                    <span class="px-3 py-1 bg-red-500 text-white rounded-md">Mitral Regurgitation</span>
+                  @elseif($ms == true)
+                    <span class="px-3 py-1 bg-red-500 text-white rounded-md">Mitral Stenosis</span>
+                  @elseif($mvp == true)
+                    <span class="px-3 py-1 bg-red-500 text-white rounded-md">Mitral Valve Prolapse</span>
+                  @endif
+                </div>
+                <div>
+                  <h2 class="text-sm text-gray-600 mb-2">Verification</h2>
+                  @if($data->status == 0)
+                    <span class="px-3 py-1 bg-yellow-500 text-white rounded-md">Not verified</span>
+                  @elseif($data->status == 1)
+                    <span class="px-3 py-1 bg-green-500 text-white rounded-md">Verified</span>
+                  @endif
+                </div>
+
+                
+              </div>
+              <div>
+                <h2 class="text-sm text-gray-600 mb-1">Updated</h2>
+                <span class="text-lg">{{$data->updated_at}}</span>
+              </div>
+            </div>
+
+
+      </div>
+
+  </div>
 </div>
 
 <script>

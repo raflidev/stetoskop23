@@ -1,78 +1,49 @@
-<div class="fixed w-full">
-    <!-- Primary Navigation Menu -->
-    <nav class="bg-black bg-opacity-70">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                    <!-- Navigation Links -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <a class="inline-flex items-center {{request()->is('dashboard') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('dashboard')}}">Home</a>
-                        @if(Auth::user()->role == 'admin')
-                            <a class="inline-flex items-center {{request()->is('assign') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('assign.index')}}">Add Dokter</a>
-                        @endif
-                        @if(Auth::user()->role == 'pasien')
-                            <a class="inline-flex items-center {{request()->is('ownCheck') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('prediksi.check_index')}}">Classification</a>
-                        @endif
-                        {{-- @if(Auth::user()->role == 'dokter')
-                            <a class="inline-flex items-center {{request()->is('prediksi.check_index') ? 'border-orange-500 text-orange-500' : 'hover:border-orange-500 border-transparent'}} text-white px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-orange-400 focus:outline-none focus:text-orange-600 focus:border-orange-500 transition" href="{{route('prediksi.check_index')}}">Classification</a>
-                        @endif --}}
-                    </div>
-                     <!-- Logo -->
-                     <div class="flex-shrink-0 flex items-center">
-                        <a href="{{route('dashboard')}}">
-                            <img src="/images/logo.png" alt="" class="w-24">
-                        </a>
-                    </div>
-
-                <div class="hidden sm:flex sm:items-center sm:ml-6">
-                    <div class="ml-3 relative">
-                        <div onclick="toggleDropdown()">
-                            <span class="inline-flex rounded-md">
-                                <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white  hover:text-orange-500 focus:outline-none transition">
-                                    {{Auth::user()->nama_lengkap}}
-                                    <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </span>
+<div class="fixed w-5/6 right-0 z-20">
+    <div class="flex justify-center">
+        <div class="w-5/6 bg-white mt-10 shadow rounded-sm py-5 px-8 ">
+            <div class="flex justify-between text-gray-700 items-center relative">
+                <div>
+                <div class="text-lg">Welcome, <span class="font-medium">Rafli Ramadhan</span></div>
+                <div class="text-sm">You are logged in as patient</div>
+                </div>
+                <div class="shadow-md p-2 rounded-full outline outline-2 group hover:outline-orange-600 duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 group-hover:text-orange-600 duration-200">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>              
+                <div class="invisible group-hover:visible opacity-0 group-hover:opacity-100 transform ease absolute top-10 right-0 w-3/12 bg-white duration-300 outline outline-1 outline-gray-300 shadow rounded-sm">
+                    <div class="text-gray-600">
+                        <div class="px-4 pt-3 pb-1">
+                            <h1 class="text-sm">{{Auth::user()->email}}</h1>
+                            <span class="text-xs">{{Auth::user()->role}}</span>
                         </div>
-
-                        <div id="dropdown-menu" class="ease-in-out duration-300 rounded-md ring-1 absolute w-32 top-10 ring-black ring-opacity-5 py-1 bg-white hidden">
-                            <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                Manage Account
+                        <div class="grid grid-cols-1 divide-y-2 text-sm">
+                            <div class="px-4 py-3 hover:bg-orange-300 duration-300">
+                                <a href="/profile" class="flex space-x-3 items-center">
+                                    <div>
+                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                      </svg>            
+                                    </div>
+                                    <span>Profile</span>
+                                  </a>
                             </div>
-
-                            <a class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition" href="{{route('user.edit')}}">Profile</a>
-
-
-                            <div class="border-t border-gray-100"></div>
-
-                            <!-- Authentication -->
-                            <form method="POST" action="{{route('logout')}}">
-                                @csrf
-                                <button type="submit" class="block w-full text-left px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition" >Log Out</button>
-                            </form>
+                            <div class="px-4 py-3 hover:bg-orange-300 duration-300">
+                                <a href="/logout" class="flex space-x-3 items-center">
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                                          </svg>                                                      
+                                    </div>
+                                    <span>Logout</span>
+                                  </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Hamburger -->
-            <div class="-mr-2 flex items-center sm:hidden">
-                <button @click="open =! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+            
+            </div>
             </div>
         </div>
-    </nav>
-</div>
 
-<script>
-    // toggle dropdown menu
-    function toggleDropdown() {
-        document.getElementById("dropdown-menu").classList.toggle("hidden");
-    }
-</script>
+</div>

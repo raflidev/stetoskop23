@@ -38,15 +38,9 @@ class UserController extends Controller
     {
 
         if (Auth::attempt($request->only('email', 'password'))) {
-            toastr()->success('Berhasil Login!');
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard')->with('success', 'Login success!');
         }
-        
-        toastr()->error('Your username and password are wrong.');
-        return back();
-        // return back()->withErrors([
-        //     'wrong' => 'Email atau Password anda salah!',
-        // ]);
+        return redirect()->route('login')->with('error', 'Your username and password are wrong.');
     }
 
     public function register()

@@ -4,6 +4,7 @@ use App\Http\Controllers\AssignController;
 use App\Http\Controllers\PrediksiController;
 use App\Http\Controllers\UserController;
 use App\Models\Assign;
+use App\Models\User;
 use App\Models\Prediksi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -33,8 +34,19 @@ Route::get('/dashboard', function () {
         return view('dashboard_dokter', ['data' => $data]);
     }
     if (Auth::user()->role == "pasien") {
-        $data = Prediksi::where('user_id', Auth::user()->id)->get();
-        return view('dashboard_pasien', ['data' => $data]);
+        $id = Auth::user()->id;
+        $history = Prediksi::where('user_id', $id);
+
+        $data = $history->orderBy('created_at', 'desc')->get();
+        $mvp_count = $data->where('result', "3")->count();
+        $n_count = $data->where('result', "4")->count();
+        $ms_count = $data->where('result', "2")->count();
+        $mr_count = $data->where('result', "1")->count();
+        $as_count = $data->where('result', "0")->count();
+
+        $verify_count = $data->where('status', "1")->count();
+        $nonverify_count = $data->where('status', "0")->count();
+        return view('dashboard_pasien', ['data' => $data, 'n_count' => $n_count, 'mvp_count' => $mvp_count, 'ms_count' => $ms_count, 'mr_count' => $mr_count, 'as_count' => $as_count, 'verify_count' => $verify_count, 'nonverify_count' => $nonverify_count]);
     }
 })->name('dashboard')->middleware('auth');
 
@@ -49,7 +61,7 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/register-dokter', 'register_dokter')->name('register_dokter');
     Route::post('/register-dokter', 'store_dokter')->name('register_dokter.action');
 
-    Route::post('/logout', 'logout')->name('logout');
+    Route::get('/logout', 'logout')->name('logout');
 
     Route::get('/user/show/{id}', 'show')->name('user.show')->middleware('auth');
     Route::get('/user/profile', 'edit')->name('user.edit')->middleware('auth');
