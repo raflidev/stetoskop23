@@ -154,7 +154,14 @@ class PrediksiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // update predict
+        $prediksi = Prediksi::find($id);
+        $prediksi->status = $request->status;
+        $prediksi->note = $request->note;
+        $prediksi->result = $request->diagnose;
+        $prediksi->save();
+
+        return redirect()->back()->with('success', 'Data berhasil diverifikasi');
     }
 
     /**

@@ -16,7 +16,7 @@
           </x-button-link>
         </div>
       </div>
-    
+    @if(Auth::user()->role == 'pasien')
       <div>
         <div class="font-medium text-orange-300 text-sm uppercase mb-4 px-4">Diagnoses</div>
         <div class="space-y-4">
@@ -27,6 +27,7 @@
           </x-button-link>
         </div>
       </div>
+    @endif
     
       <div>
         <div class="font-medium text-orange-300 text-sm uppercase mb-4 px-4">Account</div>

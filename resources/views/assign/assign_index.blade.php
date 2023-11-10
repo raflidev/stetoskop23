@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-<x-navbar/>
+{{-- <x-navbar/>
 <div class="min-h-screen bg-gray-100">
     <div class="h-[30rem]" style="background-image: url(/images/bg-pasien.png)">
         <div class="flex h-full justify-center">
@@ -110,5 +110,126 @@
         </div>
     </div>
     <x-footer/>
+</div> --}}
+<div class="flex">
+    <x-sidebar/>
+    <div class="w-2/12"></div>
+    <div class="w-10/12 bg-gray-100 min-h-screen">
+        <x-navbar/>
+
+        <div class="flex justify-center mt-32">
+            <div class="w-5/6 bg-white mt-5 shadow rounded-sm py-5 px-8 text-gray-700">
+            <h1 class="text-lg mb-6">Diagnoses</h1>
+            <div class="flex justify-between divide-gray-300">
+                <div class="grid grid-cols-4 w-full text-center gap-4">
+                    <x-item-card-grid :count="$pasien_count" title="Patient">
+                        <div class="bg-green-100 flex items-center p-5 rounded-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"  class="w-7 h-7 text-green-500">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                            </svg>                              
+                        </div>
+                    </x-item-card-grid>
+                    <x-item-card-grid :count="$dokter_count" title="Doctor">
+                        <div class="bg-green-100 flex items-center p-5 rounded-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"  class="w-7 h-7 text-green-500">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                            </svg>                              
+                        </div>
+                    </x-item-card-grid>
+                    <x-item-card-grid :count="$assigned_count" title="Assigned">
+                        <div class="bg-blue-100 flex items-center p-5 rounded-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"  class="w-7 h-7 text-blue-500">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            </svg>
+                        </div>
+                    </x-item-card-grid>
+                    <x-item-card-grid :count="$notassigned_count" title="Not Assigned">
+                        <div class="bg-orange-100 flex items-center p-5 rounded-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-orange-500">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </div>
+                    </x-item-card-grid>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center">
+            <div class="w-5/6 bg-white mt-5 shadow rounded-sm py-5 px-8 text-gray-700">
+                <h1 class="text-lg mb-6">Relation Patient and Doctor</h1>
+                <div>
+                    <form action="{{route('assign.store')}}" method="post">
+                        @csrf
+                        <div class="mb-10 space-y-3">
+                            <div>
+                                <h2 class="text-sm text-gray-600 mb-2">
+                                    Patient
+                                </h2>
+                                <select name="user_id" id="id" class="border border-gray-500 w-2/6 rounded-sm px-3 py-2">
+                                    <option value=""> -- Select Pasien --</option>
+                                    @foreach ($pasien as $p)
+                                    <option value="{{$p->id}}">{{$p->nama_lengkap}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <h2 class="text-sm text-gray-600 mb-2" for="id">
+                                    Doctor
+                                </h2>
+                                <select name="dokter_id" id="id" class="border border-gray-500 w-2/6 rounded-sm px-3 py-2">
+                                    <option value=""> -- Select Doctor --</option>
+                                    @foreach ($dokter as $d)
+                                    <option value="{{$d->id}}">{{$d->nama_lengkap}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="pt-5">
+                                <button class="bg-orange-500 text-white rounded-sm px-3 py-1" type="submit">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <div class="w-5/6 bg-white mt-5 shadow rounded-sm py-5 px-8 text-gray-700">
+                <h1 class="text-lg mb-6">Table Patient and Doctor</h1>
+                <div>
+                    <table id="myTable" class="display text-sm">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php $no = 1 @endphp
+                            @foreach ($data as $data)
+                            <tr>
+                                <td>{{$no}}</td>
+                                <td>{{$data->pasien}}</td>
+                                <td>{{$data->dokter}}</td>
+                                <td>{{$data->created_at}}</td>
+                            </tr>
+                            @php $no++ @endphp
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable();
+    } );
+</script>
 @endsection

@@ -209,47 +209,97 @@
               </div>
             </div>
 
-            <div class="mt-10 space-y-4">
+            <form method="POST" action="{{route('prediksi.update', ['id' => $id])}}" class="mt-10 space-y-4">
+              @csrf
+              @method('PUT')
               <div>
                 <h2 class="text-sm text-gray-600 mb-1">Doctor name</h2>
                 <span>{{$data->nama_dokter}}</span>
               </div>
               <div>
                 <h2 class="text-sm text-gray-600 mb-1">Note</h2>
-                <span>{{$data->note}}</span>
+                @if(Auth::user()->role == 'dokter')
+                  <textarea type="text" name="note" class="w-full border border-black rounded-sm p-1" rows="5">{{$data->note}}</textarea>
+                @else
+                  @if($data->note == null)
+                    <span>-</span>
+                  @else
+                    <span>{{$data->note}}</span>
+                  @endif
+                @endif
               </div>
               <div class="flex space-x-20 text-sm">
                 <div>
                   <h2 class="text-sm text-gray-600 mb-2">Diagnose</h2>
                   {{-- <span>{{$data->result}}</span> --}}
-                  @if($n == true)
-                    <span class="px-3 py-1 bg-green-500 text-white rounded-md">Normal</span>
-                  @elseif($as == true)
-                    <span class="px-3 py-1 bg-red-500 text-white rounded-md">Aortic Stenosis</span>
-                  @elseif($mr == true)
-                    <span class="px-3 py-1 bg-red-500 text-white rounded-md">Mitral Regurgitation</span>
-                  @elseif($ms == true)
-                    <span class="px-3 py-1 bg-red-500 text-white rounded-md">Mitral Stenosis</span>
-                  @elseif($mvp == true)
-                    <span class="px-3 py-1 bg-red-500 text-white rounded-md">Mitral Valve Prolapse</span>
+                  @if(Auth::user()->role == 'dokter')
+                    <select name="diagnose" id="" class="border border-gray-500 w-full rounded-sm px-3 py-2">
+                      <option value="{{$data->result}}" selected>
+                        @if($data->result == 0)
+                        Aortic Stenosis
+                        @elseif($data->result == 1)
+                        Mitral Regurgitation
+                        @elseif($data->result == 2)
+                        Mitral Stenosis
+                        @elseif($data->result == 3)
+                        Mitral Valve Prolapse
+                        @else
+                        Normal
+                        @endif</option>
+                      <option value="0">Aortic Stenosis</option>
+                      <option value="1">Mitral Regurgitation</option>
+                      <option value="2">Mitral Stenosis</option>
+                      <option value="3">Mitral Valve Prolapse</option>
+                      <option value="4">Normal</option>
+                    </select>
+                  @else
+                    @if($n == true)
+                      <span class="px-3 py-1 bg-green-500 text-white rounded-md">Normal</span>
+                    @elseif($as == true)
+                      <span class="px-3 py-1 bg-red-500 text-white rounded-md">Aortic Stenosis</span>
+                    @elseif($mr == true)
+                      <span class="px-3 py-1 bg-red-500 text-white rounded-md">Mitral Regurgitation</span>
+                    @elseif($ms == true)
+                      <span class="px-3 py-1 bg-red-500 text-white rounded-md">Mitral Stenosis</span>
+                    @elseif($mvp == true)
+                      <span class="px-3 py-1 bg-red-500 text-white rounded-md">Mitral Valve Prolapse</span>
+                    @endif
                   @endif
                 </div>
                 <div>
                   <h2 class="text-sm text-gray-600 mb-2">Verification</h2>
-                  @if($data->status == 0)
-                    <span class="px-3 py-1 bg-yellow-500 text-white rounded-md">Not verified</span>
-                  @elseif($data->status == 1)
-                    <span class="px-3 py-1 bg-green-500 text-white rounded-md">Verified</span>
+                  @if(Auth::user()->role == 'dokter')
+                    <select name="status" id="" class="border border-gray-500 w-full rounded-sm px-3 py-2">
+                      <option value="{{$data->result}}" selected>
+                        @if($data->status == 0)
+                        Not verified
+                        @elseif($data->status == 1)
+                        Verified
+                        @endif</option>
+                      <option value="0">Not verified</option>
+                      <option value="1">Verified</option>
+                    </select>
+                  @else
+                    @if($data->status == 0)
+                      <span class="px-3 py-1 bg-yellow-500 text-white rounded-md">Not verified</span>
+                    @elseif($data->status == 1)
+                      <span class="px-3 py-1 bg-green-500 text-white rounded-md">Verified</span>
+                    @endif
                   @endif
                 </div>
 
                 
               </div>
-              <div>
-                <h2 class="text-sm text-gray-600 mb-1">Updated</h2>
-                <span class="text-lg">{{$data->updated_at}}</span>
-              </div>
-            </div>
+              @if(Auth::user()->role == 'dokter')
+                <button class="bg-orange-500 text-white rounded-sm px-3 py-1" type="submit">Save</button>
+              @else
+                <div>
+                  <h2 class="text-sm text-gray-600 mb-1">Updated</h2>
+                  <span class="text-lg">{{$data->updated_at}}</span>
+                </div>
+              @endif
+
+            </form>
 
 
       </div>

@@ -3,8 +3,17 @@
         <div class="w-5/6 bg-white mt-10 shadow rounded-sm py-5 px-8 ">
             <div class="flex justify-between text-gray-700 items-center relative">
                 <div>
-                <div class="text-lg">Welcome, <span class="font-medium">Rafli Ramadhan</span></div>
-                <div class="text-sm">You are logged in as patient</div>
+                <div class="text-lg">Welcome, <span class="font-medium">{{Auth::user()->nama_lengkap}}</span></div>
+                <div class="text-sm">You are logged in as 
+                    @if(Auth::user()->role == 'admin')
+                        <span>Administrator</span>
+                    @elseif(Auth::user()->role == 'pasien')
+                        <span>Patient</span>
+                    @else
+                        <span>Doctor</span>
+                    @endif
+
+                </div>
                 </div>
                 <div class="shadow-md p-2 rounded-full outline outline-2 group hover:outline-orange-600 duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 group-hover:text-orange-600 duration-200">
@@ -14,7 +23,13 @@
                     <div class="text-gray-600">
                         <div class="px-4 pt-3 pb-1">
                             <h1 class="text-sm">{{Auth::user()->email}}</h1>
-                            <span class="text-xs">{{Auth::user()->role}}</span>
+                            @if(Auth::user()->role == 'admin')
+                                <span class="text-xs">Administrator</span>
+                            @elseif(Auth::user()->role == 'pasien')
+                                <span class="text-xs">Patient</span>
+                            @else
+                                <span class="text-xs">Doctor</span>
+                            @endif
                         </div>
                         <div class="grid grid-cols-1 divide-y-2 text-sm">
                             <div class="px-4 py-3 hover:bg-orange-300 duration-300">

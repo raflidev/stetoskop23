@@ -20,7 +20,13 @@ class AssignController extends Controller
         // dd($data);
         $pasien = User::all()->where('role', 'pasien');
         $dokter = User::all()->where('role', 'dokter');
-        return view('assign.assign_index', ['data' => $data, 'pasien' => $pasien, 'dokter' => $dokter]);
+        $pasien_count = User::all()->where('role', 'pasien')->count();
+        $dokter_count = User::all()->where('role', 'dokter')->count();
+
+        $assigned_count = DB::table('assign')->count();
+        $notassigned_count = DB::table('users')->where('role', 'pasien')->count() - $assigned_count;
+
+        return view('assign.assign_index', ['data' => $data, 'pasien' => $pasien, 'dokter' => $dokter, 'pasien_count' => $pasien_count, 'dokter_count' => $dokter_count, 'assigned_count' => $assigned_count, 'notassigned_count' => $notassigned_count]);
     }
 
     /**

@@ -29,9 +29,21 @@ Route::get('/dashboard', function () {
         if (isset($_GET['name'])) {
             $data = Assign::join('users', 'users.id', '=', 'assign.user_id')->where('dokter_id', Auth::user()->id)->where('nama_lengkap', 'like', '%' . $_GET['name'] . '%')->get();
         } else {
-            $data = Assign::join('users', 'users.id', '=', 'assign.user_id')->where('dokter_id', Auth::user()->id)->get();
+            $data = Assign::join('users', 'users.id', '=', 'assign.user_id')->where('assign.dokter_id', Auth::user()->id)->get();
+            $data_hitung = Assign::join('users', 'users.id', '=', 'assign.user_id')->join('prediksi', 'users.id', '=', 'prediksi.user_id')->where('assign.dokter_id', Auth::user()->id)->get();
+            $mvp_count = $data_hitung->where('result', "3")->count();
+            $n_count = $data_hitung->where('result', "4")->count();
+            $ms_count = $data_hitung->where('result', "2")->count();
+            $mr_count = $data_hitung->where('result', "1")->count();
+            $as_count = $data_hitung->where('result', "0")->count();
+
+            $verify_count = $data_hitung->where('status', "1")->count();
+            $nonverify_count = $data_hitung->where('status', "0")->count();
+
+            $male_count = $data->where('jenis_kelamin', "Male")->count();
+            $female_count = $data->where('jenis_kelamin', "Female")->count();
         }
-        return view('dashboard_dokter', ['data' => $data]);
+        return view('dashboard_dokter', ['data' => $data, 'male_count' => $male_count,'female_count' => $female_count,'n_count' => $n_count, 'mvp_count' => $mvp_count, 'ms_count' => $ms_count, 'mr_count' => $mr_count, 'as_count' => $as_count, 'verify_count' => $verify_count, 'nonverify_count' => $nonverify_count]);
     }
     if (Auth::user()->role == "pasien") {
         $id = Auth::user()->id;
@@ -50,6 +62,9 @@ Route::get('/dashboard', function () {
     }
 })->name('dashboard')->middleware('auth');
 
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
@@ -78,6 +93,8 @@ Route::controller(PrediksiController::class)->group(function () {
     Route::post('/verify/{id}', 'verification')->name('prediksi.verification')->middleware('auth');
 
     Route::get('/detail/{id}', 'detail')->name('prediksi.detail')->middleware('auth');
+    
+    Route::put('/result/{id}', 'update')->name('prediksi.update')->middleware('auth');
 });
 
 Route::controller(AssignController::class)->group(function () {

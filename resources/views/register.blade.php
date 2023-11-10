@@ -97,8 +97,8 @@
                             <div>
                                 <label for="gender" class="block text-sm text-gray-700">Gender</label>
                                 <select id="gender" name="gender" value="{{old('gender')}}" class="border py-1 px-2 border-gray-200 outline-1 focus:outline-orange-500/70 duration-500 rounded-sm shadow-sm block mt-1 w-full">
-                                    <option value="Laki-Laki">Laki-Laki</option>
-                                    <option value="Perempuan">Perempuan</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
                                 </select>
                             </div>
                             <div>
