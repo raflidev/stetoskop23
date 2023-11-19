@@ -194,20 +194,30 @@ class PrediksiController extends Controller
             ],
         ]);
 
-        $response = json_decode($response->getBody());
-        $prediksi = new Prediksi();
-        $prediksi->user_id = $request->user_id;
-        $prediksi->suara = $nama_file;
-        $prediksi->file_path = $tujuan_upload . '/' . $nama_file;
-        $prediksi->jenis = "VHD";
-        $prediksi->result = $response->hasil;
-        $prediksi->save();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Data berhasil ditambahkan',
-            'data' => $prediksi
-        ]);
+        try{
+            $response = json_decode($response->getBody());
+            $prediksi = new Prediksi();
+            $prediksi->user_id = $request->user_id;
+            $prediksi->suara = $nama_file;
+            $prediksi->file_path = $tujuan_upload . '/' . $nama_file;
+            $prediksi->jenis = "VHD";
+            $prediksi->result = $response->hasil;
+            $prediksi->status = 0;
+            $prediksi->note = "";
+            $prediksi->save();
+    
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data berhasil ditambahkan',
+                'data' => $prediksi
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data gagal ditambahkan',
+                'data' => $e->getMessage()
+            ]);
+        }
     }
 
 

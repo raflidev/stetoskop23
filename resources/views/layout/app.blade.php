@@ -6,7 +6,7 @@
   @vite('resources/css/app.css')
   <script src="https://unpkg.com/wavesurfer.js@2.2.1/dist/wavesurfer.min.js"></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
-  {{-- <link rel="stylesheet" href="{{ URL::asset('build/assets/app.89ec1456.css') }}"> --}}
+  {{-- <link rel="stylesheet" href="{{ URL::asset('build/assets/app.477dc030.css') }}"> --}}
   @yield('head')
   <title>VAMIC - Valvular Monitoring System</title>
 </head>
@@ -21,6 +21,6 @@
 @yield('script')
 @vite('resources/js/app.js')
 
-{{-- <script src="{{ URL::asset('build/assets/app.f40b63e3.js') }}"></script> --}}
+{{-- <script src="{{ URL::asset('build/assets/app.56766496.js') }}"></script> --}}
 </html>
 
